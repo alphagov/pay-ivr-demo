@@ -1,4 +1,4 @@
 applications:
-- name: pay-ivr-demo
+- name: ivr-demo
 buildpacks:
   - nodejs_buildpack
