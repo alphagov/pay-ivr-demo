@@ -5,6 +5,7 @@ const axios = require('axios')
 const { VoiceResponse } = require('twilio').twiml
 
 const PRODUCTS_URL = process.env.PRODUCTS_URL || 'http://products-dev-stephen.apps.internal:8080'
+const CONNECTOR_URL = process.env.CONNECTOR_URL || 'http://card-connector-dev-stephen.apps.internal:8080'
 const DEFAULT_TWILIO_ACCOUNT_ID = process.env.DEFAULT_TWILIO_ACCOUNT_ID || 'AC6925d2aa8e28da97bb0d3d46c806e6fa'
 const DEFAULT_GATEWAY_ACCOUNT_ID = process.env.DEFAULT_GATEWAY_ACCOUNT_ID || 205
 
@@ -52,7 +53,7 @@ async function processAccount(twilioAccountId) {
     response.say(voiceOptions, 'You have reached Gove Dot Uk Pay!')
 
     if (products.length === 1) {
-        await processPaymentRequest(product[0], response)
+        await processPaymentRequest(products[0], response)
     } else {
         await processProductChoices(products, twilioAccountId, response)
     }
@@ -156,7 +157,8 @@ router.post('/receive-payment/:productId', async (req, res, next) => {
 })
 
 router.post('/payment-complete', async (req, res,next) => {
-    const { AccountSid, Result } = req.body
+    const { AccountSid, Result, PaymentConfirmationCode } = req.body
+    const id = configuredTwilioAcconts[AccountSid]
 
     const defaultErrorResponse = 'Your payment failed to complete, no funds have been taken from your account, Gove Dot Uk Pay out!'
 
@@ -171,6 +173,13 @@ router.post('/payment-complete', async (req, res,next) => {
     const response = new VoiceResponse()
 
     response.say(voiceOptions, responseMessage)
+
+    if (Result === 'success') {
+        await axios.post(CONNECTOR_URL, {
+            stripe_id: PaymentConfirmationCode,
+            account_id: id
+        })
+    }
 
     console.log(`Completed payment response for AccountSid ${AccountSid}, result ${Result}`)
     res.status(200).send(response.toString())
