@@ -2,7 +2,7 @@
 
 Log into pass invironment using `cf login` (see https://docs.cloud.service.gov.uk/get_started.html#get-started)
 
-Target the appropriate space `cf target -S {spacename}`
+Target the appropriate space `cf target -s {spacename}`
 
 then
 `cf push`
