@@ -29,9 +29,9 @@ app.post('/payment-complete', async (req, res) => {
 
     switch (req.body.Result) {
         case 'success':
-            await axios.post('http://card-connector-dev-stephen.apps.internal:8080/v1/api/ivr/create-payment', {
-                'stripe_id': req.body.PaymentConfirmationCode
-            })
+            // await axios.post('http://card-connector-dev-stephen.apps.internal:8080/v1/api/ivr/create-payment', {
+            //     'stripe_id': req.body.PaymentConfirmationCode
+            // })
 
             text = 'Your payment was complete.';
             break;
