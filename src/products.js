@@ -174,12 +174,12 @@ router.post('/payment-complete', async (req, res,next) => {
 
     response.say(voiceOptions, responseMessage)
 
-    if (Result === 'success') {
-        await axios.post(CONNECTOR_URL, {
-            stripe_id: PaymentConfirmationCode,
-            account_id: id
-        })
-    }
+    // if (Result === 'success') {
+    //     await axios.post(CONNECTOR_URL, {
+    //         stripe_id: PaymentConfirmationCode,
+    //         account_id: id
+    //     })
+    // }
 
     console.log(`Completed payment response for AccountSid ${AccountSid}, result ${Result}`)
     res.status(200).send(response.toString())
