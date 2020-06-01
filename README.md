@@ -1,6 +1,6 @@
 # Deploying
 
-Log into pass invironment using `cf login` (see https://docs.cloud.service.gov.uk/get_started.html#get-started)
+Log into a PaaS environment using `cf login` (see https://docs.cloud.service.gov.uk/get_started.html#get-started)
 
 Target the appropriate space `cf target -s {spacename}`
 
