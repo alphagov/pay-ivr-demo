@@ -68,7 +68,7 @@ async function processProductChoices(products, twilioAccountId, composeResponse)
     })
 
     products.forEach((product, i) => gather.say(voiceOptions, `Press ${i + 1} for ${product.name}`))
-    response.say(voiceOptions, 'No input received, Gove Dot Uk Pay out!')
+    response.say(voiceOptions, 'No input received, ending session.')
     return response
 }
 
@@ -92,7 +92,7 @@ async function processPaymentAmount(product, composeResponse) {
         method: 'POST'
     })
     gather.say(voiceOptions, 'Please enter the amount you will be paying,\nfollowed by the hash key')
-    response.say(voiceOptions, 'No input received, Govee Dot Uk Pay out!')
+    response.say(voiceOptions, 'No input received, ending session.')
 
     return response
 }
@@ -160,12 +160,12 @@ router.post('/payment-complete', async (req, res,next) => {
     const { AccountSid, Result, PaymentConfirmationCode } = req.body
     const id = configuredTwilioAcconts[AccountSid]
 
-    const defaultErrorResponse = 'Your payment failed to complete, no funds have been taken from your account, Gove Dot Uk Pay out!'
+    const defaultErrorResponse = 'Your payment failed to complete, no funds have been taken from your account.'
 
     const responseMap = {
-        'success': 'Your payment has been completed successfully, Gove Dot Uk Pay out!',
-        'invalid-card-number': 'The provided card details were incorrect, please double check these and try again, Gove Dot Uk Pay out!',
-        'invalid-security-code': 'The security code used was incorrect, please double check this and try again, Gove Dot Uk Pay out!',
+        'success': 'Your payment has been completed successfully.',
+        'invalid-card-number': 'The provided card details were incorrect, please double check these and try again.',
+        'invalid-security-code': 'The security code used was incorrect, please double check this and try again.',
         'payment-connector-error': defaultErrorResponse
     }
 
