@@ -1,5 +1,7 @@
 # Deploying
 
+> As of September 2021, this repository is no longer actively maintained by the GOV.UK Pay team.
+
 Login to a PaaS environment using `cf login` (see https://docs.cloud.service.gov.uk/get_started.html#get-started)
 
 Target the appropriate space `cf target -s {spacename}`
